@@ -1,5 +1,5 @@
 def _clojure_test_impl(ctx):
-    toolchain = ctx.toolchains["//:toolchain_type"]
+    toolchain = ctx.toolchains["//rules:toolchain_type"]
 
     ctx.actions.write(
         output = ctx.outputs.executable,
@@ -21,6 +21,6 @@ clojure_test = rule(
         "srcs": attr.label_list(default = [], allow_files = [".clj"]),
         "deps": attr.label_list(default = [], providers = [JavaInfo]),
     },
-    toolchains = ["//:toolchain_type"],
+    toolchains = ["//rules:toolchain_type"],
     test = True
 )

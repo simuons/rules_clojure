@@ -1,5 +1,5 @@
 def _clojure_repl_impl(ctx):
-    toolchain = ctx.toolchains["//:toolchain_type"]
+    toolchain = ctx.toolchains["//rules:toolchain_type"]
 
     ctx.actions.write(
         output = ctx.outputs.executable,
@@ -20,6 +20,6 @@ clojure_repl = rule(
         "deps": attr.label_list(default = [], providers = [JavaInfo]),
         "ns": attr.string(mandatory = False),
     },
-    toolchains = ["//:toolchain_type"],
+    toolchains = ["//rules:toolchain_type"],
     executable = True
 )
