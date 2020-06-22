@@ -3,6 +3,8 @@ def clojure_library_impl(ctx):
 
     output = ctx.actions.declare_directory("%s.library" % ctx.label.name)
 
+    all_transitive_deps = depset(transitive = [dep[JavaInfo].transitive_deps for dep in ctx.attr.deps])
+
     cmd = """
         set -e;
         rm -rf {output}
@@ -10,7 +12,7 @@ def clojure_library_impl(ctx):
         {java} -cp {classpath} -Dclojure.compile.path={output} -Dclojure.compile.jar={jar} -Dclojure.compile.aot={aot} clojure.main {script} {sources}
     """.format(
         java = toolchain.java,
-        classpath = ":".join([f.path for f in toolchain.files.runtime + ctx.files.deps + [output]]),
+        classpath = ":".join([f.path for f in toolchain.files.runtime + all_transitive_deps.to_list() + [output]]),
         output = output.path,
         jar = ctx.outputs.jar.path,
         aot = ",".join(ctx.attr.aots),
