@@ -20,10 +20,8 @@ jobs:
       - run: env
       - name: Install bazelisk
         run: |
-          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64"
-          mkdir -p "${GITHUB_WORKSPACE}/bin/"
-          mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
-          chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+          curl "https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64" -L -o "${HOME}/bazelisk"
+          chmod +x "${HOME}/bazelisk"
       - name: Run bazel test
         run: |
-          "${GITHUB_WORKSPACE}/bin/bazel" test //...
+          "${HOME}/bazelisk" test //...
