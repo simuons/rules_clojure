@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  check:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,11 +17,9 @@ jobs:
         with:
           path: ~/.cache/bazel
           key: bazel
-      - run: env
       - name: Install bazelisk
         run: |
-          curl "https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64" -L -o "${HOME}/bazelisk"
-          chmod +x "${HOME}/bazelisk"
+          curl "https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64" -L -o $HOME/bazelisk
+          chmod +x $HOME/bazelisk
       - name: Run bazel test
-        run: |
-          "${HOME}/bazelisk" test //...
+        run: $HOME/bazelisk test //...
