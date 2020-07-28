@@ -21,5 +21,10 @@ jobs:
         run: |
           curl "https://github.com/bazelbuild/bazelisk/releases/download/v1.5.0/bazelisk-linux-amd64" -L -o $HOME/bazelisk
           chmod +x $HOME/bazelisk
+      - run: |
+          echo $HOME/bazelisk
+          ls -al $HOME
+      - name: Run bazel build
+        run: $HOME/bazelisk build //...
       - name: Run bazel test
         run: $HOME/bazelisk test //...
