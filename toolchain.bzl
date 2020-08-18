@@ -15,7 +15,10 @@ def _clojure_toolchain_impl(ctx):
 clojure_toolchain = rule(
     implementation = _clojure_toolchain_impl,
     attrs = {
-        "classpath": attr.label_list(),
+        "classpath": attr.label_list(
+            doc = "List of JavaInfo dependencies which will be implictly added to library/repl/test/binary classpath. Must contain clojure.jar",
+            providers = [JavaInfo],
+        ),
         "_scripts": attr.label(
             default = "//scripts",
         ),
