@@ -22,4 +22,4 @@ def clojure_runtime():
         server_urls = ["https://repo1.maven.org/maven2/"],
     )
 
-    native.register_toolchains("@rules_clojure//rules:clojure_toolchain")
+    native.register_toolchains("@rules_clojure//internal:clojure_toolchain")
