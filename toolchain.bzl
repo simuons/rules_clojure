@@ -12,7 +12,7 @@ def _clojure_toolchain_impl(ctx):
         ),
     )]
 
-_clojure_toolchain = rule(
+clojure_toolchain = rule(
     implementation = _clojure_toolchain_impl,
     attrs = {
         "classpath": attr.label_list(
@@ -29,17 +29,3 @@ _clojure_toolchain = rule(
     },
     provides = [platform_common.ToolchainInfo],
 )
-
-def clojure_toolchain(name, classpath):
-    toolchain_impl = "%s_impl" % name
-
-    _clojure_toolchain(
-        name = toolchain_impl,
-        classpath = classpath,
-    )
-
-    native.toolchain(
-        name = name,
-        toolchain = ":%s" % toolchain_impl,
-        toolchain_type = "@rules_clojure//rules:toolchain_type",
-    )
