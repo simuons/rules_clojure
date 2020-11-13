@@ -233,7 +233,7 @@ sh_test(
 # TODO: Do we need multiple namespaces and dependencies since clojure compiles everything transitively?
 
 clojure_library(
-    name = "lib", # didn't reuse :library because it has aot I'll do so once aot is removed
+    name = "lib",  # didn't reuse :library because it has aot I'll do so once aot is removed
     srcs = ["library.clj"],
 )
 
@@ -269,8 +269,9 @@ clojure_java_library(
 
 clojure_test(
     name = "app-bundled-java-test",
+    size = "small",
     srcs = ["app-java-test.clj"],
-    deps = [":app-bundled-java"]
+    deps = [":app-bundled-java"],
 )
 
 java_binary(
@@ -299,8 +300,9 @@ clojure_java_library(
 
 clojure_test(
     name = "app-transitive-java-test",
+    size = "small",
     srcs = ["app-java-test.clj"],
-    deps = [":app-transitive-java"]
+    deps = [":app-transitive-java"],
 )
 
 java_binary(
