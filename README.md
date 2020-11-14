@@ -1,6 +1,10 @@
 # [Clojure](https://clojure.org) rules for [Bazel](https://bazel.build)
 
-## WORKSPACE
+![build](https://github.com/simuons/rules_clojure/workflows/CI/badge.svg)
+
+## Setup
+
+Add the following to your `WORKSPACE`:
 
 ```skylark
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -19,184 +23,35 @@ rules_clojure_dependencies()
 rules_clojure_toolchains()
 ```
 
-Note: update commit and sha256 as needed.
+**Note**: Update commit and sha256 as needed.
 
 By default `rules_clojure` loads `clojure` jars with `jvm_maven_import_external`.
 If you need to use different loader like `rules_jvm_external` please see [example](examples/setup/custom). 
 
-<!-- Generated with Stardoc: http://skydoc.bazel.build -->
+## Rules
 
-<a name="#clojure_library"></a>
+Load rules in your `BUILD` files from [@rules_clojure//:rules.bzl](rules.bzl)
 
-## clojure_library
+- [clojure_binary](docs/rules.md#clojure_binary)
+- [clojure_java_library](docs/rules.md#clojure_java_library)
+- [clojure_library](docs/rules.md#clojure_library)
+- [clojure_repl](docs/rules.md#clojure_repl)
+- [clojure_test](docs/rules.md#clojure_test)
 
-<pre>
-clojure_library(<a href="#clojure_library-name">name</a>, <a href="#clojure_library-srcs">srcs</a>, <a href="#clojure_library-deps">deps</a>, <a href="#clojure_library-aots">aots</a>)
-</pre>
+## Dependencies
 
-Builds a jar for given sources with ahead-of-time compilation.
+TODO: FIX ME
 
-### Attributes
+Requires `clojure.jar` to be setup in toolchain.
 
-<table class="params-table">
-  <colgroup>
-    <col class="col-param" />
-    <col class="col-description" />
-  </colgroup>
-  <tbody>
-    <tr id="clojure_library-name">
-      <td><code>name</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#name">Name</a>; required
-        <p>
-          A unique name for this target.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_library-srcs">
-      <td><code>srcs</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a>; optional
-        <p>
-          clj source files.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_library-deps">
-      <td><code>deps</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a>; optional
-        <p>
-          Libraries to link into this library.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_library-aots">
-      <td><code>aots</code></td>
-      <td>
-        List of strings; optional
-        <p>
-          Namespaces to be compiled.
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+## Toolchains
 
+TODO: FIX ME
 
-<a name="#clojure_repl"></a>
+All rules require `@rules_clojure//:toolchain` type.
 
-## clojure_repl
+Actual toolchain can be defined with `clojure_toolchain` rule loaded from [@rules_clojure//:toolchains.bzl](toolchains.bzl)
 
-<pre>
-clojure_repl(<a href="#clojure_repl-name">name</a>, <a href="#clojure_repl-deps">deps</a>, <a href="#clojure_repl-ns">ns</a>)
-</pre>
+`load("@rules_clojure//:toolchains.bzl", "clojure_toolchain")`
 
-Runs REPL with given dependencies in classpath.
-
-### Attributes
-
-<table class="params-table">
-  <colgroup>
-    <col class="col-param" />
-    <col class="col-description" />
-  </colgroup>
-  <tbody>
-    <tr id="clojure_repl-name">
-      <td><code>name</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#name">Name</a>; required
-        <p>
-          A unique name for this target.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_repl-deps">
-      <td><code>deps</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a>; optional
-        <p>
-          Libraries available in REPL.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_repl-ns">
-      <td><code>ns</code></td>
-      <td>
-        String; optional
-        <p>
-          Namespace to start REPL in.
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<a name="#clojure_test"></a>
-
-## clojure_test
-
-<pre>
-clojure_test(<a href="#clojure_test-name">name</a>, <a href="#clojure_test-srcs">srcs</a>, <a href="#clojure_test-deps">deps</a>)
-</pre>
-
-Runs clojure.test for given sources.
-
-### Attributes
-
-<table class="params-table">
-  <colgroup>
-    <col class="col-param" />
-    <col class="col-description" />
-  </colgroup>
-  <tbody>
-    <tr id="clojure_test-name">
-      <td><code>name</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#name">Name</a>; required
-        <p>
-          A unique name for this target.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_test-srcs">
-      <td><code>srcs</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a>; optional
-        <p>
-          clj source files with test cases.
-        </p>
-      </td>
-    </tr>
-    <tr id="clojure_test-deps">
-      <td><code>deps</code></td>
-      <td>
-        <a href="https://bazel.build/docs/build-ref.html#labels">List of labels</a>; optional
-        <p>
-          Libraries to link into this library.
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- ------------------------------------------------- -->
-
-## clojure_binary
-
-There is no such rule but same effect might be achieved with combination of clojure_library with aots and java_binary.
-
-```build
-clojure_library(
-    name = "library",
-    srcs = ["library.clj"],
-    aots = ["library"]
-)
-
-java_binary(
-    name = "binary",
-    main_class = "library",
-    runtime_deps = [":library"]
-)
-```
+Among other private things it holds an implicit classpath which is added to every rule.
