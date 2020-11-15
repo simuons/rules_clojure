@@ -11,9 +11,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules_clojure",
-    sha256 = "26b11fe38e3c3981d211d2405556c9262f584a6d1fa6559acc4c325ee730560c",
-    strip_prefix = "rules_clojure-62c1ee4fb398a473d178831a83c9a032707efd15",
-    urls = ["https://github.com/simuons/rules_clojure/archive/62c1ee4fb398a473d178831a83c9a032707efd15.tar.gz"],
+    sha256 = "c841fbf94af331f0f8f02de788ca9981d7c73a10cec798d3be0dd4f79d1d627d",
+    strip_prefix = "rules_clojure-c044cb8608a2c3180cbfee89e66bbeb604afb146",
+    urls = ["https://github.com/simuons/rules_clojure/archive/c044cb8608a2c3180cbfee89e66bbeb604afb146.tar.gz"],
 )
 
 load("@rules_clojure//:repositories.bzl", "rules_clojure_dependencies", "rules_clojure_toolchains")
