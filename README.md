@@ -1,6 +1,6 @@
 # [Clojure](https://clojure.org) rules for [Bazel](https://bazel.build)
 
-![build](https://github.com/simuons/rules_clojure/workflows/CI/badge.svg)
+![CI](https://github.com/simuons/rules_clojure/workflows/CI/badge.svg)
 
 ## Setup
 
@@ -25,9 +25,6 @@ rules_clojure_toolchains()
 
 **Note**: Update commit and sha256 as needed.
 
-By default `rules_clojure` loads `clojure` jars with `jvm_maven_import_external`.
-If you need to use different loader like `rules_jvm_external` please see [example](examples/setup/custom). 
-
 ## Rules
 
 Load rules in your `BUILD` files from [@rules_clojure//:rules.bzl](rules.bzl)
@@ -40,18 +37,18 @@ Load rules in your `BUILD` files from [@rules_clojure//:rules.bzl](rules.bzl)
 
 ## Dependencies
 
-TODO: FIX ME
+Rules require `clojure.jar` in implicit classpath via toolchains.
 
-Requires `clojure.jar` to be setup in toolchain.
+Defaults are loaded with `rules_clojure_dependencies` from [@rules_clojure//:repositories.bzl](repositories.bzl) using `jvm_maven_import_external`.
+
+Please see [example](examples/setup/custom) of dependencies loaded with `rules_jvm_external`. 
 
 ## Toolchains
 
-TODO: FIX ME
+Rules require `@rules_clojure//:toolchain` type.
 
-All rules require `@rules_clojure//:toolchain` type.
+Default is registered with `rules_clojure_toolchains` from [@rules_clojure//:repositories.bzl](repositories.bzl)
 
-Actual toolchain can be defined with `clojure_toolchain` rule loaded from [@rules_clojure//:toolchains.bzl](toolchains.bzl)
+Custom toolchain can be defined with `clojure_toolchain` rule from [@rules_clojure//:toolchains.bzl](toolchains.bzl)
 
-`load("@rules_clojure//:toolchains.bzl", "clojure_toolchain")`
-
-Among other private things it holds an implicit classpath which is added to every rule.
+Please see [example](examples/setup/custom) of custom toolchain.
