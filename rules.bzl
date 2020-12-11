@@ -1,8 +1,8 @@
-load("@rules_clojure//rules:binary.bzl", _clojure_binary_impl = "clojure_binary_impl")
-load("@rules_clojure//rules:compile.bzl", _clojure_java_library_impl = "clojure_java_library_impl")
-load("@rules_clojure//rules:library.bzl", _clojure_library_impl = "clojure_library_impl")
-load("@rules_clojure//rules:repl.bzl", _clojure_repl_impl = "clojure_repl_impl")
-load("@rules_clojure//rules:test.bzl", _clojure_test_impl = "clojure_test_impl")
+load("//rules:binary.bzl", _clojure_binary_impl = "clojure_binary_impl")
+load("//rules:compile.bzl", _clojure_java_library_impl = "clojure_java_library_impl")
+load("//rules:library.bzl", _clojure_library_impl = "clojure_library_impl")
+load("//rules:repl.bzl", _clojure_repl_impl = "clojure_repl_impl")
+load("//rules:test.bzl", _clojure_test_impl = "clojure_test_impl")
 
 clojure_binary = rule(
     doc = "Builds a wrapper shell script with the same name as the rule.",
