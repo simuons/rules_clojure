@@ -41,7 +41,6 @@ def clojurescript_binary_impl(ctx):
         "-O", ctx.attr.compilation_level,
         "-o", js.path,
         "-c", ctx.attr.main,
-        "$@",
     ])
 
     ctx.actions.run_shell(
