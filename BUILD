@@ -19,3 +19,21 @@ toolchain(
     toolchain = ":default_clojure_toolchain",
     toolchain_type = "@rules_clojure//:toolchain",
 )
+
+toolchain_type(
+    name = "toolchain_cljs",
+    visibility = ["//visibility:public"],
+)
+
+clojure_toolchain(
+    name = "default_clojurescript_toolchain",
+    classpath = [
+        "@org_clojure_clojurescript",
+    ],
+)
+
+toolchain(
+    name = "clojurescript_toolchain",
+    toolchain = ":default_clojurescript_toolchain",
+    toolchain_type = "@rules_clojure//:toolchain_cljs",
+)

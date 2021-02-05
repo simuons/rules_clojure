@@ -10,3 +10,35 @@ load("@rules_clojure//:repositories.bzl", "rules_clojure_dependencies", "rules_c
 rules_clojure_dependencies()
 
 rules_clojure_toolchains()
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+RULES_JVM_EXTERNAL_TAG = "3.3"
+
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab",
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+)
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    artifacts = [
+        "clojure.java-time:clojure.java-time:0.2.1",
+        "cljsjs:moment:2.24.0-0",
+    ],
+    generate_compat_repositories = True,
+    repositories = [
+        "https://maven.google.com",
+        "https://jcenter.bintray.com/",
+        "https://repo1.maven.org/maven2",
+        "https://repo.maven.apache.org/maven2/",
+        "https://repo.clojars.org",
+    ],
+)
+
+load("@maven//:compat.bzl", "compat_repositories")
+
+compat_repositories()

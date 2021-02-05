@@ -1,6 +1,55 @@
-load("@rules_clojure//:rules.bzl", "clojure_library")
+load("@rules_clojure//:rules.bzl", "clojure_binary", "clojure_library", "clojurescript_binary", "clojurescript_library")
 
 clojure_library(
-    name = "example",
-    srcs = ["example.clj"],
+    name = "math",
+    srcs = [
+        "math.cljc",
+    ],
+)
+
+clojure_library(
+    name = "example_clj_lib",
+    srcs = [
+        "example.clj",
+    ],
+    deps = [
+        ":math",
+        "@maven//:clojure_java_time_clojure_java_time",
+    ],
+)
+
+clojurescript_library(
+    name = "example_cljs_lib",
+    srcs = [
+        "example.cljs",
+    ],
+    deps = [
+        ":math",
+        "@maven//:cljsjs_moment",
+    ],
+)
+
+clojure_binary(
+    name = "example_clj",
+    main = "example.core",
+    deps = [
+        ":example_clj_lib",
+    ],
+)
+
+clojurescript_binary(
+    name = "example_cljs_min",
+    compilation_level = "advanced",
+    main = "example.core",
+    deps = [
+        ":example_cljs_lib",
+    ],
+)
+
+clojurescript_binary(
+    name = "example_cljs",
+    main = "example.core",
+    deps = [
+        ":example_cljs_lib",
+    ],
 )

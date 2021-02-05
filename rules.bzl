@@ -1,6 +1,6 @@
-load("@rules_clojure//rules:binary.bzl", _clojure_binary_impl = "clojure_binary_impl")
+load("@rules_clojure//rules:binary.bzl", _clojure_binary_impl = "clojure_binary_impl", _clojurescript_binary_impl = "clojurescript_binary_impl")
 load("@rules_clojure//rules:compile.bzl", _clojure_java_library_impl = "clojure_java_library_impl")
-load("@rules_clojure//rules:library.bzl", _clojure_library_impl = "clojure_library_impl")
+load("@rules_clojure//rules:library.bzl", _clojure_library_impl = "clojure_library_impl", _clojurescript_library_impl = "clojurescript_library_impl")
 load("@rules_clojure//rules:repl.bzl", _clojure_repl_impl = "clojure_repl_impl")
 load("@rules_clojure//rules:test.bzl", _clojure_test_impl = "clojure_test_impl")
 
@@ -29,7 +29,7 @@ clojure_java_library = rule(
 clojure_library = rule(
     doc = "Builds a jar file from given sources with the paths corresponding to namespaces.",
     attrs = {
-        "srcs": attr.label_list(mandatory = True, allow_empty = False, allow_files = [".clj"], doc = "clj source files."),
+        "srcs": attr.label_list(mandatory = True, allow_empty = False, allow_files = [".clj", ".cljc"], doc = "clj source files."),
         "deps": attr.label_list(default = [], providers = [JavaInfo], doc = "Libraries to link into this library."),
     },
     provides = [JavaInfo],
@@ -57,4 +57,27 @@ clojure_test = rule(
     test = True,
     toolchains = ["@rules_clojure//:toolchain"],
     implementation = _clojure_test_impl,
+)
+
+clojurescript_library = rule(
+    doc = "Builds a jar file from given sources with the paths corresponding to namespaces.",
+    attrs = {
+        "srcs": attr.label_list(mandatory = True, allow_empty = False, allow_files = [".cljs", ".cljc"], doc = "cljs source files."),
+        "deps": attr.label_list(default = [], providers = [JavaInfo], doc = "Libraries to link into this library."),
+    },
+    provides = [JavaInfo],
+    toolchains = ["@rules_clojure//:toolchain_cljs"],
+    implementation = _clojurescript_library_impl,
+)
+
+clojurescript_binary = rule(
+    doc = "Builds a JavaScript compil.",
+    attrs = {
+        "main": attr.string(mandatory = True, doc = "A namespace that houses the entry point."),
+        "deps": attr.label_list(mandatory = True, allow_empty = False, providers = [JavaInfo], doc = "Libraries to link into this binary."),
+        "compilation_level": attr.string(default="none", doc = "Compilation level used by the JavaScript Closure compiler."),
+    },
+    executable = False,
+    toolchains = ["@rules_clojure//:toolchain_cljs"],
+    implementation = _clojurescript_binary_impl,
 )

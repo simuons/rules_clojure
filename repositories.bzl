@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_import_external", "jvm_maven_import_external")
 
 def rules_clojure_dependencies():
     jvm_maven_import_external(
@@ -22,5 +22,13 @@ def rules_clojure_dependencies():
         server_urls = ["https://repo1.maven.org/maven2/"],
     )
 
+    jvm_import_external(
+        rule_name = "java_import",
+        name = "org_clojure_clojurescript",
+        artifact_sha256 = "dcc98e103d281d4eab21ca94fba11728e9f587c3aa09c8ffc3b96cff210adcce",
+        artifact_urls = ["https://github.com/clojure/clojurescript/releases/download/r1.10.758/cljs.jar"],
+    )
+
 def rules_clojure_toolchains():
     native.register_toolchains("@rules_clojure//:clojure_toolchain")
+    native.register_toolchains("@rules_clojure//:clojurescript_toolchain")

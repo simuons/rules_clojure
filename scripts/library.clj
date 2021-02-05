@@ -9,8 +9,11 @@
         (second form)
         (when-not (= ::done form) (recur reader))))))
 
+(defn file-extension [path]
+  (second (re-find #"(\.[a-zA-Z0-9]+)$" path)))
+
 (defn ns-path [file]
-  (-> file ns-symbol name (.replace \- \_) (.replace \. \/) (str ".clj")))
+  (-> file ns-symbol name (.replace \- \_) (.replace \. \/) (str (file-extension (.getPath file)))))
 
 (def compile-jar (-> "clojure.compile.jar" System/getProperty io/file))
 
