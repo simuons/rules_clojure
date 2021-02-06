@@ -29,14 +29,33 @@ def clojurescript_binary_impl(ctx):
         transitive = [dep[JavaInfo].transitive_runtime_deps for dep in ctx.attr.deps],
     )
     dest = "%s.js" % ctx.label.name
+    map_dest = "%s.map" % dest
+
     js = ctx.actions.declare_file(dest)
+
     out_dir = ctx.actions.declare_directory("%s_out" % ctx.label.name)
+    outputs = [js, out_dir]
+
+    source_map = "false"
+    if ctx.attr.compilation_level != "none":
+      js_source_map = ctx.actions.declare_file(map_dest)
+      source_map = '"' + js_source_map.path + '"'
+      outputs.append(js_source_map)
+
+    config_edn = " ".join([
+        "{",
+        ":source-map",
+        source_map,
+        "}",
+    ])
+
     deps_list = deps.to_list()
     classpath = ":".join([f.path for f in reversed(deps_list)])
     cmd = " ".join([
         toolchain.java,
         "-cp", classpath,
         "cljs.main",
+        "-co '%s'" % config_edn,
         "-d", out_dir.path,
         "-O", ctx.attr.compilation_level,
         "-o", js.path,
@@ -45,7 +64,7 @@ def clojurescript_binary_impl(ctx):
 
     ctx.actions.run_shell(
         command = cmd,
-        outputs = [js, out_dir],
+        outputs = outputs,
         inputs = toolchain.files.runtime + toolchain.files.scripts + toolchain.files.jdk + deps_list,
         mnemonic = "ClojureScriptBinary",
         progress_message = "Building %s" % ctx.label,
