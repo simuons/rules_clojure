@@ -57,6 +57,7 @@ def clojurescript_binary_impl(ctx):
         "-co '%s'" % config_edn,
         "-d", out_dir.path,
         "-O", ctx.attr.compilation_level.lower(),
+        "-v", "true" if ctx.attr.verbose else "false",
         "-o", js.path,
         "-c", ctx.attr.main,
     ])
@@ -66,7 +67,7 @@ def clojurescript_binary_impl(ctx):
         outputs = outputs,
         inputs = toolchain.files.runtime + toolchain.files.scripts + toolchain.files.jdk + deps_list,
         mnemonic = "ClojureScriptBinary",
-        progress_message = "Building %s" % ctx.label,
+        progress_message = "[ClojureScript] Building %s" % ctx.label,
     )
 
     return DefaultInfo(

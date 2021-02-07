@@ -76,6 +76,7 @@ clojurescript_binary = rule(
         "main": attr.string(mandatory = True, doc = "A namespace that houses the entry point."),
         "deps": attr.label_list(mandatory = True, allow_empty = False, providers = [JavaInfo], doc = "Libraries to link into this binary."),
         "compilation_level": attr.string(default="none", doc = "Compilation level used by the JavaScript Closure compiler."),
+        "verbose": attr.bool(default=False, doc="Whether the ClojureScript compiler should log what it is doing."),
     },
     executable = False,
     toolchains = ["@rules_clojure//:toolchain_cljs"],
