@@ -71,7 +71,7 @@ clojurescript_library = rule(
 )
 
 clojurescript_binary = rule(
-    doc = "Builds a JavaScript compil.",
+    doc = "Builds a compiled JavaScript file.",
     attrs = {
         "main": attr.string(mandatory = True, doc = "A namespace that houses the entry point."),
         "deps": attr.label_list(mandatory = True, allow_empty = False, providers = [JavaInfo], doc = "Libraries to link into this binary."),
