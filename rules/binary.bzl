@@ -71,9 +71,5 @@ def clojurescript_binary_impl(ctx):
     )
 
     return DefaultInfo(
-        #runfiles = ctx.runfiles(
-        #    files = toolchain.files.scripts + toolchain.files.jdk,
-        #    transitive_files = deps,
-        #),
         files = depset([js, out_dir]),
     )
