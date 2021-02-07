@@ -37,15 +37,14 @@ def clojurescript_binary_impl(ctx):
     outputs = [js, out_dir]
 
     source_map = "false"
-    if ctx.attr.compilation_level != "none":
+    if ctx.attr.compilation_level.lower() != "none":
       js_source_map = ctx.actions.declare_file(map_dest)
       source_map = '"' + js_source_map.path + '"'
       outputs.append(js_source_map)
 
     config_edn = " ".join([
         "{",
-        ":source-map",
-        source_map,
+        ":source-map", source_map,
         "}",
     ])
 
@@ -57,7 +56,7 @@ def clojurescript_binary_impl(ctx):
         "cljs.main",
         "-co '%s'" % config_edn,
         "-d", out_dir.path,
-        "-O", ctx.attr.compilation_level,
+        "-O", ctx.attr.compilation_level.lower(),
         "-o", js.path,
         "-c", ctx.attr.main,
     ])
