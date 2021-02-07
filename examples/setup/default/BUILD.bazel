@@ -41,7 +41,7 @@ clojurescript_binary(
     name = "example_cljs_min",
     compilation_level = "advanced",
     main = "example.core",
-    verbose = True,
+    verbose = False,
     deps = [
         ":example_cljs_lib",
     ],
