@@ -10,7 +10,7 @@ def clojure_binary_impl(ctx):
         output = ctx.outputs.executable,
         content = "{java} -cp {classpath} clojure.main -m {main} $@".format(
             java = toolchain.java_runfiles,
-            classpath = ":".join([f.short_path for f in deps.to_list()]),
+            classpath = ctx.configuration.host_path_separator.join([f.short_path for f in deps.to_list()]),
             main = ctx.attr.main,
         ),
     )
