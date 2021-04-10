@@ -16,7 +16,7 @@ def clojure_java_library_impl(ctx):
         {java} -cp {classpath} -Dclojure.compile.path={classes} -Dclojure.compile.jar={jar} clojure.main {script} {namespaces}
     """.format(
         java = toolchain.java,
-        classpath = ":".join([f.path for f in deps.to_list() + [classes]]),
+        classpath = ctx.configuration.host_path_separator.join([f.path for f in deps.to_list() + [classes]]),
         classes = classes.path,
         jar = jar.path,
         script = toolchain.scripts["compile.clj"].path,
