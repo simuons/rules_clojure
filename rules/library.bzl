@@ -5,7 +5,7 @@ def clojure_library_impl(ctx):
 
     cmd = "{java} -cp {classpath} -Dclojure.compile.jar={jar} clojure.main {script} {sources}".format(
         java = toolchain.java,
-        classpath = ":".join([f.path for f in toolchain.files.runtime]),
+        classpath = ctx.configuration.host_path_separator.join([f.path for f in toolchain.files.runtime]),
         jar = jar.path,
         script = toolchain.scripts["library.clj"].path,
         sources = " ".join([f.path for f in ctx.files.srcs]),
