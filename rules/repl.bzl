@@ -10,7 +10,7 @@ def clojure_repl_impl(ctx):
         output = ctx.outputs.executable,
         content = "{java} -cp {classpath} clojure.main {args}".format(
             java = toolchain.java_runfiles,
-            classpath = ":".join([f.short_path for f in deps.to_list()]),
+            classpath = ctx.configuration.host_path_separator.join([f.short_path for f in deps.to_list()]),
             args = " ".join(["-e", """\"(require '[{ns}]) (in-ns '{ns}) (clojure.main/repl)\"""".format(ns = ctx.attr.ns)] if ctx.attr.ns else []),
         ),
     )
