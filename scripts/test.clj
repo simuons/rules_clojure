@@ -1,5 +1,6 @@
 (require '[clojure.test :as test])
 (require '[clojure.java.io :as io])
+(require '[clojure.string :as cs])
 (import (java.io PushbackReader))
 
 (defn ns-symbol [file]
@@ -12,7 +13,7 @@
 (defn ns-path [file]
   (-> file ns-symbol name (.replace \- \_) (.replace \. \/) (str ".clj")))
 
-(def sources (map io/file *command-line-args*))
+(def sources (map io/file (filter (fn [file] (cs/ends-with? file ".clj")) *command-line-args*)))
 
 (doseq [source sources]
   (load-file (.getCanonicalPath source)))

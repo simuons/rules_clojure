@@ -51,7 +51,7 @@ clojure_repl = rule(
 clojure_test = rule(
     doc = "Runs clojure.test for given sources.",
     attrs = {
-        "srcs": attr.label_list(mandatory = True, allow_empty = False, allow_files = [".clj"], doc = "clj source files with test cases."),
+        "srcs": attr.label_list(mandatory = True, allow_empty = False, allow_files = [".clj", ".json"], doc = "clj source files with test cases and resource files."),
         "deps": attr.label_list(default = [], providers = [JavaInfo], doc = "Libraries to link into this library."),
     },
     test = True,
